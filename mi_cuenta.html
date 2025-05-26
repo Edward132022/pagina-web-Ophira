@@ -7,19 +7,23 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
+<!-- Eliminado script duplicado/conflictivo para evitar errores -->
+
 <body>
   <!-- Barra de navegación -->
+  
+  <!-- Contenedor del menú -->
   <nav class="menu">
-    <a href="index.html" class="logo">
+    <a href="index.php" class="logo">
       <img src="imagenes/logo.png" alt="Logo">
     </a>
     <div class="hamburger" onclick="toggleMenu()">☰</div>
     <ul class="nav-links">
       <li><a href="nosotros.html">Nosotros</a></li>
-      <li><a href="cuero.html">Cuero</a></li>
-      <li><a href="tejido.html">Tejido</a></li>
+      <li><a href="cuero.php">Cuero</a></li>
+      <li><a href="tejido.php">Tejido</a></li>
       <li><a href="personaliza.html">Personaliza</a></li>
-      <li><a href="promociones.html">Promociones</a></li>
+      <li><a href="promociones.php">Promociones</a></li>
     </ul>
     <div class="search-box">
       <input type="text" placeholder="Buscar...">
@@ -28,7 +32,7 @@
       </button>
     </div>
     <div class="icons">
-        <a href="mi_cuenta.html"><img src="imagenes/user.png" alt="Usuario"></a>
+      <a href="mi_cuenta.html"><img src="imagenes/user.png" alt="Usuario"></a>
       <a href="carrito.html"><img src="imagenes/cart.png" alt="Carrito"></a>
     </div>
   </nav>
@@ -49,8 +53,8 @@
       </div>
       <div class="footer-section">
         <h3>COMPRAR</h3>
-        <a href="cuero.html">Cuero</a>
-        <a href="tejido.html">Tejidas</a>
+        <a href="cuero.php">Cuero</a>
+        <a href="tejido.php">Tejidas</a>
         <a href="personaliza.html">Personalizar</a>
       </div>
       <div class="footer-section">
@@ -66,34 +70,30 @@
 
   <!-- Enlace al script -->
   <script src="user.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const contenedor = document.getElementById("contenidoCuenta");
-      const usuarioActual = localStorage.getItem("usuario_actual");
+ <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const contenedor = document.getElementById("contenidoCuenta");
 
-      if (!usuarioActual) {
-        // Usuario no logueado
+  fetch("mi_cuenta.php")
+    .then(response => response.json())
+    .then(data => {
+      if (data.loggedIn) {
+        contenedor.innerHTML = `
+          <h2>Bienvenido, ${data.nombre}</h2>
+          <p>Accede a tu <a href="index.php">Menú Principal</a> o continúa navegando en nuestro sitio.</p>
+          <form method="POST" action="logout.php">
+            <button type="submit" style="margin-top: 15px;">Cerrar sesión</button>
+          </form>
+        `;
+      } else {
         contenedor.innerHTML = `
           <h2>No ha iniciado sesión</h2>
           <p>Por favor <a href="login.html">inicie sesión aquí</a> para acceder a su cuenta.</p>
         `;
-      } else {
-        // Usuario logueado
-        const usuario = JSON.parse(usuarioActual);
-        contenedor.innerHTML = `
-          <h2>Bienvenido, ${usuario.nombre}</h2>
-          <p>Accede a tu <a href="index.html">Menú Principal</a> o continúa navegando en nuestro sitio.</p>
-          <button id="cerrarSesion" style="margin-top: 15px;">Cerrar sesión</button>
-        `;
-
-        // Lógica para cerrar sesión
-        document.getElementById("cerrarSesion").addEventListener("click", () => {
-          localStorage.removeItem("usuario_actual");
-          alert("Sesión cerrada correctamente.");
-          window.location.href = "login.html";
-        });
       }
     });
-  </script>
+});
+</script>
+
 </body>
 </html>

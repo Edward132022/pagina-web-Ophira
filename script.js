@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 // Función para redirigir a otra página
 function irApromo() {
-    window.location.href = "promociones.html"; // Reemplázalo con tu URL destino
+    window.location.href = "promociones.php"; // Reemplázalo con tu URL destino
 }
 // Función para redirigir a otra página
 function irAcueros() {
@@ -112,4 +112,3 @@ function decrementarCantidad() {
         input.value = parseInt(input.value) - 1;
     }
 }
-

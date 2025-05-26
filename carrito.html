@@ -6,20 +6,46 @@
   <title>Carrito - Ofira Creations</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .carrito-total {
+      background-color: #f8f8f8;
+      padding: 15px;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      border: 2px solid #ccc;
+      font-size: 1.2em;
+      text-align: right;
+      border-radius: 10px;
+    }
+  </style>
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const productos = sessionStorage.getItem("productosResumen") || "";
+    const total = sessionStorage.getItem("precioTotal") || "0.00";
+
+    // Rellenar los campos si existen en el DOM
+    const textarea = document.querySelector('textarea[name="articulo"]');
+    const precioInput = document.querySelector('input[name="precio"]');
+
+    if (textarea) textarea.value = productos;
+    if (precioInput) precioInput.value = total;
+  });
+</script>
+
 </head>
 <body>
-  <!-- Menú de navegación (igual que en index.html) -->
+  <!-- Menú de navegación -->
   <nav class="menu">
-    <a href="index.html" class="logo">
+    <a href="index.php" class="logo">
       <img src="imagenes/logo.png" alt="Logo">
     </a>
     <div class="hamburger" onclick="toggleMenu()">☰</div>
     <ul class="nav-links">
       <li><a href="nosotros.html">Nosotros</a></li>
-      <li><a href="cuero.html">Cuero</a></li>
-      <li><a href="tejido.html">Tejido</a></li>
+      <li><a href="cuero.php">Cuero</a></li>
+      <li><a href="tejido.php">Tejido</a></li>
       <li><a href="personaliza.html">Personaliza</a></li>
-      <li><a href="promociones.html">Promociones</a></li>
+      <li><a href="promociones.php">Promociones</a></li>
     </ul>
     <div class="search-box">
       <input type="text" placeholder="Buscar...">
@@ -35,12 +61,10 @@
 
   <!-- Contenido del Carrito -->
   <section class="carrito-contenido">
-    <!-- Contenedor para los productos del carrito se genera dinámicamente -->
     <div id="productos"></div>
-    <!-- Vista cuando el carrito está vacío -->
     <div class="carrito-vacio" id="carritoVacio">
       <h2>No hay nada en tu carrito</h2>
-      <p class="total">$0</p>
+      <p class="total">$0cop</p>
       <button class="btn-atras" id="seguirComprandoVacio">Seguir comprando</button>
     </div>
   </section>
@@ -54,8 +78,8 @@
       </div>
       <div class="footer-section">
         <h3>COMPRAR</h3>
-        <a href="cuero.html">Cuero</a>
-        <a href="tejido.html">Tejidos</a>
+        <a href="cuero.php">Cuero</a>
+        <a href="tejido.php">Tejidos</a>
         <a href="personaliza.html">Personaliza</a>
       </div>
       <div class="footer-section">
@@ -70,7 +94,7 @@
   </footer>
 
   <script>
-    // Función para el menú hamburguesa
+    // Función para menú hamburguesa
     function toggleMenu() {
       const navLinks = document.querySelector('.nav-links');
       navLinks.classList.toggle('active');
@@ -87,8 +111,10 @@
       } else {
         carritoVacioDiv.style.display = "none";
         productosDiv.style.display = "block";
-        // Limpiar contenido previo
         productosDiv.innerHTML = "";
+
+        let total = 0;
+
         cart.forEach(function(item, index) {
           const carritoItem = document.createElement("div");
           carritoItem.className = "carrito-item";
@@ -97,29 +123,36 @@
             <div class="carrito-descripcion">
               <h3>${item.name}</h3>
               <p>Descripción: ${item.description}</p>
-              <p>Precio: ${item.price}</p>
+              <p>Precio: $${item.price}</p>
               <button class="btn-eliminar" data-index="${index}">Eliminar</button>
             </div>
           `;
           productosDiv.appendChild(carritoItem);
+
+          // Calcular total
+          total += parseFloat(item.price.toString().replace(/[^\d.]/g, ""));
         });
-        
-        // Agregar botón "Comprar todo" al final de la lista
+
+        // Mostrar total
+        const totalDiv = document.createElement("div");
+        totalDiv.className = "carrito-total";
+        totalDiv.innerHTML = `<strong>Total: $${total.toLocaleString()}</strong>`;
+        productosDiv.appendChild(totalDiv);
+
+        // Botón "Comprar todo"
         const comprarTodoBtn = document.createElement("button");
         comprarTodoBtn.className = "btn-comprar-todo";
         comprarTodoBtn.textContent = "Comprar todo";
         comprarTodoBtn.addEventListener("click", function() {
-          window.location.href = "compra.html";
+          window.location.href = "compra.php";
         });
         productosDiv.appendChild(comprarTodoBtn);
       }
-      
-      // Funcionalidad "Seguir comprando" (cuando el carrito está vacío)
+
       document.getElementById("seguirComprandoVacio").addEventListener("click", function() {
-        window.location.href = "index.html";
+        window.location.href = "index.php";
       });
-      
-      // Delegamos el evento de eliminación
+
       productosDiv.addEventListener("click", function(e) {
         if(e.target && e.target.matches("button.btn-eliminar")) {
           let index = e.target.getAttribute("data-index");
@@ -130,6 +163,7 @@
       });
     });
   </script>
+
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,3 +1,46 @@
+
+<?php
+// Activar reporte de errores para depuración (remover en producción)
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// Conexión a la base de datos
+define('DB_HOST', 'sql202.infinityfree.com');
+define('DB_USER', 'if0_39047307');
+define('DB_PASS', 'cy5DglojXTK');
+define('DB_NAME', 'if0_39047307_usuarios');
+
+$conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+$conexion->set_charset('utf8');
+
+if ($conexion->connect_error) {
+    die('Conexión fallida: ' . $conexion->connect_error);
+}
+$conexion->set_charset("utf8");
+
+if ($conexion->connect_error) {
+    die("Conexión fallida: " . $conexion->connect_error);
+}
+
+$id = $_GET['id'] ?? null;
+if (!$id) {
+    echo "Producto no especificado.";
+    exit;
+}
+
+$sql = "SELECT * FROM articulo WHERE id = ?";
+$stmt = $conexion->prepare($sql);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$resultado = $stmt->get_result();
+$producto = $resultado->fetch_assoc();
+
+if (!$producto) {
+    echo "Producto no encontrado.";
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -50,63 +93,39 @@
         </div>
     </nav>
 
-   <!-- Banner con efecto y enlace -->
-<div class="banner" onclick="irAus()">
-    <div class="slide" style="background-image: url('imagenes/nosotros.png');">
-    <div class="overlay">
-        <h2>Nosotros</h2>
-    </div>
-</div>
-
-  <!-- Contenido principal -->
- 
-  <main>
-    <h2 class="titulo-disponibles">Nosotros</h2>
-    <section class="images-grid">
-        <!-- Miembro 1 -->
-        
-        <div class="fotos">
-            <img src="imagenes/sofia.JPG" alt="sofia">
-            <p class="textname">Sofia Alvarez</p>
-            <p class="textt">Cofundadora</p>
-        </div>
-        
-        <!-- Miembro 2 -->
-        <div class="fotos">
-            <img src="imagenes/fabian.jpg" alt="fabian">
-            <p class="textname">Fabian Gonzalez</p>
-            <p class="textt">Cofundador</p>
-        </div>
-        <!-- Miembro 3 -->
-        <div class="fotos">
-            <img src="imagenes/edward.jpg" alt="edward">
-            <p class="textname">Edward Garcia</p>
-            <p class="textt">Cofundador</p>
-        </div>
-        
-    </section>
-</main>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Banner Estático</title>
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-<!-- Sección de "¿Por qué empezó?" -->
-<section class="why-started">
-    <h2>¿Por qué empezó?</h2>
-    <p>
-        Ophira Creations empezó por el impulso de tres amigos que, siguiendo sus aspiraciones, 
-        crearon un emprendimiento de accesorios accesible para personas como ellos, jóvenes, 
-        con poca adquisición monetaria y que deseen accesorios de calidad.
-    </p>
-    <a href="index.php" class="btn-volver">Volver a la página principal</a>
-</section>
-
-   
-
-    <footer>
+<div class="producto-container">
+   <div class="producto-imagen">
+  <img src="mostrar_imagen.php?id=<?= $producto['id'] ?>" alt="<?= htmlspecialchars($producto['nombre_articuo']) ?>" width="300">
+  </div>
+   <div class="producto-detalles">
+  <h2><?= htmlspecialchars($producto['nombre_articuo']) ?></h2>
+  <p><?= htmlspecialchars($producto['descripcion']) ?></p>
+  <p>Precio: $<?= number_format($producto['precio'], 0, ',', '.') ?></p>
+ <div class="acciones">
+        <button class="boton-cantidad" onclick="decrementarCantidad()">-</button>
+  <div class="botones">
+        <a href="index.php" class="boton-atras">Atrás</a>
+      </div>
+      </div>
+  <button onclick="agregarAlCarrito({
+    name: '<?= addslashes($producto['nombre_articuo']) ?>',
+    description: '<?= addslashes($producto['descripcion']) ?>',
+    price: '<?= number_format($producto['precio'], 0, ',', '.') ?>',
+    image: 'mostrar_imagen.php?id=<?= $producto['id'] ?>'
+  })">
+    Enviar al carrito
+  </button>
+  </div>
+  </div>
+  <script>
+    function agregarAlCarrito(producto) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push(producto);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      window.location.href = 'carrito.html';
+    }
+  </script>
+   <footer>
         <!-- Contenedor principal del footer -->
         <div class="footer-container">
             
@@ -136,9 +155,8 @@
         <div class="footer-bottom">
             <p>© Ophira Creations. Todos los derechos reservados</p>
         </div>
-
-     </footer>
-     <!-- JS -->
-     <script src="script.js"></script>
+    </footer>
 </body>
 </html>
+
+<?php $conexion->close(); ?>

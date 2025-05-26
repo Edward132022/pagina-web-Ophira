@@ -1420,6 +1420,75 @@ main {
    font-size: 1.2rem;
    color: #333;
  }
+/* --- Banner de cookies --- */
+#cookie-banner {
+  position: fixed;
+  bottom: 0; left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  z-index: 9999;
+  display: none;                /* Oculto por defecto */
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+/* Contenedor interno para centrar y limitar ancho */
+#cookie-banner .cookie-content {
+  max-width: 960px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;              /* Se adapta en pantallas pequeñas */
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Texto del banner */
+#cookie-banner .cookie-content p {
+  margin: 0 0 8px 0;
+  flex: 1 1 300px;              /* Crece hasta 300px mínimo */
+}
+
+/* Enlaces dentro del texto */
+#cookie-banner .cookie-content a {
+  color: #0dc4ab;
+  text-decoration: underline;
+}
+
+/* Botón “Aceptar” */
+#cookie-banner .cookie-content button {
+  background-color: #037b69;
+  border: none;
+  padding: 10px 18px;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+/* Hover y foco para accesibilidad */
+#cookie-banner .cookie-content button:hover,
+#cookie-banner .cookie-content button:focus {
+  background-color: #057e68;
+  outline: none;
+}
+
+/* Móvil: texto encima del botón */
+@media (max-width: 480px) {
+  #cookie-banner .cookie-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #cookie-banner .cookie-content button {
+    width: 100%;
+  }
+}
  .btn-comprar-todo {
   display: inline-block;
   padding: 10px 20px;
@@ -1436,3 +1505,38 @@ main {
   background-color: #4a1f78;
   transform: scale(1.05);
 }
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #f5f5f5;
+}
+h1, h2 {
+  color: #333;
+}
+form, table {
+  background: white;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+input, button {
+  margin: 5px;
+  padding: 8px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+img {
+  max-width: 100px;
+}
+a {
+  color: blue;
+  text-decoration: none;
+}
+
