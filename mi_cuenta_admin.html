@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mi Cuenta Admin - Ophira</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Contenedor del menú -->
+    <nav class="menu">
+        <a href="index_admind.html" class="logo">
+            <img src="imagenes/logo.png" alt="Logo">
+        </a>
+
+        <!-- Menú hamburguesa -->
+        <div class="hamburger" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <!-- Enlaces de navegación -->
+        <ul class="nav-links">
+            <li><a href="admin.php">Productos</a></li>
+            <li><a href="ingresar.html">Nuevo Ingreso</a></li>
+            <li><a href="tejido.php">pedidos</a></li>
+        </ul>
+
+       
+
+        <!-- Íconos de usuario y carrito -->
+        <div class="icons">
+            <a href="mi_cuenta.html"><img src="imagenes/user.png" alt="Usuario"></a>
+        </div>
+    </nav>
+
+  <!-- Contenido principal -->
+  <main>
+    <div id="contenidoAdmin" class="form-container">
+      <h2>Bienvenido admin</h2>
+      <p>Esta es tu sección administrativa. Puedes gestionar productos y usuarios desde el panel correspondiente.</p>
+    
+      <button id="cerrarSesion">Cerrar sesión</button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>ACERCA</h3>
+        <a href="nosotros.html">Nosotros</a>
+      </div>
+      <div class="footer-section">
+        <h3>COMPRAR</h3>
+        <a href="cuero.php">Cuero</a>
+        <a href="tejido.php">Tejidas</a>
+        <a href="personaliza.html">Personalizar</a>
+      </div>
+      <div class="footer-section">
+        <h3>USUARIO</h3>
+        <a href="mi_cuenta_admin.html">Mi cuenta</a>
+        <a href="login.html">Login</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© Ophira Creations. Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+  <!-- Script para cerrar sesión -->
+  <script>
+    document.getElementById("cerrarSesion").addEventListener("click", () => {
+      localStorage.removeItem("usuario_actual");
+      alert("Sesión cerrada correctamente.");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

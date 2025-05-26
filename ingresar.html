@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ofira</title>
+
+    <!-- Importar la fuente DM Serif Display -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+    <!-- Enlace al archivo CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Contenedor del menú -->
+    <nav class="menu">
+        <a href="index_admind.html" class="logo">
+            <img src="imagenes/logo.png" alt="Logo">
+        </a>
+
+        <!-- Menú hamburguesa -->
+        <div class="hamburger" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <!-- Enlaces de navegación -->
+        <ul class="nav-links">
+            <li><a href="admin.php">Productos</a></li>
+            <li><a href="ingresar.html">Nuevo Ingreso</a></li>
+            <li><a href="pedidos.php">pedidos</a></li>
+        </ul>
+
+       
+
+        <!-- Íconos de usuario y carrito -->
+        <div class="icons">
+            <a href="mi_cuenta_admin.html"><img src="imagenes/user.png" alt="Usuario"></a>
+        </div>
+    </nav>
+
+ 
+  
+  <h1>Agregar Producto</h1>
+  <form action="insertar.php" method="POST" enctype="multipart/form-data">
+    <input type="text" name="nombre_articuo" placeholder="Nombre" required>
+    <input type="text" name="descripcion" placeholder="Descripción" required>
+    <input type="number" name="precio" placeholder="Precio" required>
+    <input type="file" name="imagen" required>
+    <button type="submit">Agregar</button>
+  </form>
+
+  <h2>Productos Registrados</h2>
+  <table>
+    <tr>
+      <th>Imagen</th>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Precio</th>
+      <th>Acciones</th>
+    </tr>
+
+    <?php
+      include("mostrar.php");
+    ?>
+
+  </table>
+  
+
+    <footer>
+        <!-- Contenedor principal del footer -->
+        <div class="footer-container">
+            
+            <!-- Sección "Acerca" con un título y un enlace -->
+            <div class="footer-section">
+                <h3>ACERCA</h3>
+                <a href="nosotros.html">Nosotros</a>
+            </div>
+    
+            <!-- Sección "Comprar" con un título y varios enlaces -->
+            <div class="footer-section">
+                <h3>COMPRAR</h3>
+                <a href="cuero.php">Cuero</a>
+                <a href="tejidas.html">Tejidas</a>
+                <a href="pedidos.php">Personalizar</a>
+            </div>
+    
+            <!-- Sección "Usuario" con un título y enlaces de cuenta -->
+            <div class="footer-section">
+                <h3>USUARIO</h3>
+                <a href="mi-cuenta.html">Mi cuenta</a>
+                <a href="login.html">Login</a>
+            </div>
+        </div>
+    
+        <!-- Texto de derechos reservados en la parte inferior -->
+        <div class="footer-bottom">
+            <p>© Ophira Creations. Todos los derechos reservados</p>
+        </div>
+    </footer>
+    <!--jvs-->>
+    <script src="script.js"></script> <!-- Enlace al archivo JavaScript -->
+    <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Aviso de cookies">
+        <div class="cookie-content">
+          <p id="cookie-text">
+            Esta web usa cookies para mejorar tu experiencia. Al continuar navegando, aceptas nuestra 
+            <a href="/politica-cookies.html" target="_blank" rel="noopener">política de cookies</a>.
+          </p>
+          <button id="accept-cookies" aria-describedby="cookie-text">Aceptar</button>
+        </div>
+      </div>
+    
+      <script src="cookies.js"></script>
+</body>
+</html>
+
+

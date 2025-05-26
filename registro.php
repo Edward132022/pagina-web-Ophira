@@ -63,10 +63,10 @@ mysqli_close($enlace);
     <div class="hamburger" onclick="toggleMenu()">☰</div>
     <ul class="nav-links">
       <li><a href="nosotros.html">Nosotros</a></li>
-      <li><a href="cuero.html">Cuero</a></li>
-      <li><a href="tejido.html">Tejido</a></li>
+      <li><a href="cuero.php">Cuero</a></li>
+      <li><a href="tejido.php">Tejido</a></li>
       <li><a href="personaliza.html">Personaliza</a></li>
-      <li><a href="promociones.html">Promociones</a></li>
+      <li><a href="promociones.php">Promociones</a></li>
     </ul>
     <div class="search-box">
       <input type="text" placeholder="Buscar..."><button><img src="imagenes/buscar.png" alt="Buscar"></button>
@@ -106,8 +106,8 @@ mysqli_close($enlace);
       </div>
       <div class="footer-section">
         <h3>COMPRAR</h3>
-        <a href="cuero.html">Cuero</a>
-        <a href="tejido.html">Tejidas</a>
+        <a href="cuero.php">Cuero</a>
+        <a href="tejido.php">Tejidas</a>
         <a href="personaliza.html">Personalizar</a>
       </div>
       <div class="footer-section">

@@ -1,13 +1,24 @@
+<?php
+$conexion = new mysqli("localhost", "root", "", "usuarios");
+$conexion->set_charset("utf8");
+
+if ($conexion->connect_error) {
+    die("Conexión fallida: " . $conexion->connect_error);
+}
+
+$sql = "SELECT * FROM articulo WHERE nombre_articuo LIKE '%cuero%'";
+$resultado = $conexion->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ofira - Cuero</title>
+  <title>Ofira - Cueros</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
-  
     .producto a {
       display: block;
       text-decoration: none;
@@ -25,10 +36,10 @@
     <div class="hamburger" onclick="toggleMenu()">☰</div>
     <ul class="nav-links">
       <li><a href="nosotros.html">Nosotros</a></li>
-      <li><a href="cuero.html">Cuero</a></li>
-      <li><a href="tejido.html">Tejido</a></li>
+      <li><a href="cuero.php">Cuero</a></li>
+      <li><a href="tejido.php">Tejido</a></li>
       <li><a href="personaliza.html">Personaliza</a></li>
-      <li><a href="promociones.html">Promociones</a></li>
+      <li><a href="promociones.php">Promociones</a></li>
     </ul>
     <div class="search-box">
       <input type="text" placeholder="Buscar...">
@@ -42,7 +53,7 @@
     </div>
   </nav>
 
-  <!-- Banner con efecto y enlace -->
+<!-- Banner con efecto y enlace -->
   <div class="banner" onclick="irAcuero()">
     <div class="slide" style="background-image: url('imagenes/cueros.png');">
       <div class="overlay">
@@ -51,34 +62,23 @@
     </div>
   </div>
 
-  <!-- Contenido principal -->
+  <!-- Contenido dinámico -->
   <main>
-    <h2 class="titulo-disponibles">Productos disponibles</h2>
+    <h2 class="titulo-disponibles">Articulos disponibles</h2>
     <section class="productos-grid">
-      <!-- Producto 1 -->
-      <div class="producto">
-        <a href="preview_box.html?id=cuero_cruz">
-          <img src="imagenes/cuero_cruz.png" alt="Pulsera cuero cruz">
-          <h3>Pulsera cuero cruz</h3>
-          <p class="precio">COP 18.000</p>
-        </a>
-      </div>
-      <!-- Producto 2 -->
-      <div class="producto">
-        <a href="preview_box.html?id=cuero_marron">
-          <img src="imagenes/cuero_marron.png" alt="Pulsera de cuero Marron">
-          <h3>Pulsera de cuero Marron</h3>
-          <p class="precio">COP 25.000</p>
-        </a>
-      </div>
-      <!-- Producto 3 -->
-      <div class="producto">
-        <a href="preview_box.html?id=cuero_negro">
-          <img src="imagenes/cuero_negro.png" alt="Pulsera cuero negro">
-          <h3>Pulsera cuero negro</h3>
-          <p class="precio">COP 25.000</p>
-        </a>
-      </div>
+      <?php if ($resultado->num_rows > 0): ?>
+        <?php while ($fila = $resultado->fetch_assoc()): ?>
+          <div class="producto">
+              <a href="previsualizacion.php?id=<?= urlencode($fila['id']) ?>">
+              <img src="mostrar_imagen.php?id=<?= $fila['id'] ?>" alt="<?= htmlspecialchars($fila['nombre_articuo']) ?>">
+              <h3><?= htmlspecialchars($fila['nombre_articuo']) ?></h3>
+              <p class="precio">COP <?= number_format($fila['precio'], 0, ',', '.') ?></p>
+            </a>
+          </div>
+        <?php endwhile; ?>
+      <?php else: ?>
+        <p style="text-align:center;">No hay productos tejidos disponibles en este momento.</p>
+      <?php endif; ?>
     </section>
   </main>
 
@@ -90,8 +90,8 @@
       </div>
       <div class="footer-section">
         <h3>COMPRAR</h3>
-        <a href="cuero.html">Cuero</a>
-        <a href="tejido.html">Tejido</a>
+        <a href="cuero.php">Cuero</a>
+        <a href="tejido.php">Tejidos</a>
         <a href="personaliza.html">Personaliza</a>
       </div>
       <div class="footer-section">
@@ -108,3 +108,5 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+<?php $conexion->close(); ?>

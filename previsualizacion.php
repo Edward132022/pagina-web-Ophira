@@ -1,3 +1,30 @@
+<?php
+$conexion = new mysqli("localhost", "root", "", "usuarios");
+$conexion->set_charset("utf8");
+
+if ($conexion->connect_error) {
+    die("Conexión fallida: " . $conexion->connect_error);
+}
+
+$id = $_GET['id'] ?? null;
+if (!$id) {
+    echo "Producto no especificado.";
+    exit;
+}
+
+$sql = "SELECT * FROM articulo WHERE id = ?";
+$stmt = $conexion->prepare($sql);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$resultado = $stmt->get_result();
+$producto = $resultado->fetch_assoc();
+
+if (!$producto) {
+    echo "Producto no encontrado.";
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -37,7 +64,9 @@
         <div class="search-box">
             <input type="text" placeholder="Buscar...">
             <button>
+            
                 <img src="imagenes/buscar.png" alt="Buscar">
+               
             </button>
         </div>
 
@@ -48,71 +77,70 @@
         </div>
     </nav>
 
-    <!-- Primer banner con efecto y enlace -->
-    <div class="banner" onclick="irAper()">
-        <div class="slide" style="background-image: url('imagenes/personaliza.png');">
-            <div class="overlay">
-                <h2>Personaliza</h2>
-            </div>
-        </div>
-    </div>
-
-    <!-- Contenido principal -->
-    <main>
-        <h2 class="titulo-disponibles">¡Personaliza Fácil!</h2>
-        <section class="productos-grid">
-        </section>
-    </main>
-
-    <!-- NUEVA SECCIÓN: Imagen a la izquierda y texto a la derecha -->
-<section class="info-personaliza">
-    <div class="info-container">
-      <div class="info-image">
-        <!-- Ajusta la ruta de la imagen según tu carpeta -->
-        <img src="imagenes/personaliza_facil.png" alt="Pulseras personalizadas">
+<div class="producto-container">
+   <div class="producto-imagen">
+  <img src="mostrar_imagen.php?id=<?= $producto['id'] ?>" alt="<?= htmlspecialchars($producto['nombre_articuo']) ?>" width="300">
+  </div>
+   <div class="producto-detalles">
+  <h2><?= htmlspecialchars($producto['nombre_articuo']) ?></h2>
+  <p><?= htmlspecialchars($producto['descripcion']) ?></p>
+  <p>Precio: $<?= number_format($producto['precio'], 0, ',', '.') ?></p>
+ <div class="acciones">
+        <button class="boton-cantidad" onclick="decrementarCantidad()">-</button>
+  <div class="botones">
+        <a href="index.html" class="boton-atras">Atrás</a>
       </div>
-      <div class="info-text">
-        <h2>¡Diseña tu pulsera única con Ophira Creations!</h2>
-        <p><strong>1.</strong> Elige la base que más te guste.</p>
-        <p><strong>2.</strong> Decide si quieres charms o no; ¡todo está a tu disposición!</p>
-        <p><strong>3.</strong> Escoge el color perfecto para tu pulsera.</p>
-        <p class="final-line">¡Y listo! En pocos pasos tendrás una pulsera única y totalmente personalizada.</p>
-        <!-- Botón para ir a la personalización directa -->
-        <a href="personalizacion.html" class="btn-personaliza">Personaliza Ahora</a>
       </div>
-    </div>
-  </section>
-  <!-- Fin de la NUEVA SECCIÓN -->
-  
-    <footer>
+  <button onclick="agregarAlCarrito({
+    name: '<?= addslashes($producto['nombre_articuo']) ?>',
+    description: '<?= addslashes($producto['descripcion']) ?>',
+    price: '<?= number_format($producto['precio'], 0, ',', '.') ?>',
+    image: 'mostrar_imagen.php?id=<?= $producto['id'] ?>'
+  })">
+    Enviar al carrito
+  </button>
+  </div>
+  </div>
+  <script>
+    function agregarAlCarrito(producto) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push(producto);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      window.location.href = 'carrito.html';
+    }
+  </script>
+   <footer>
         <!-- Contenedor principal del footer -->
         <div class="footer-container">
-            <!-- Sección "Acerca" -->
+            
+            <!-- Sección "Acerca" con un título y un enlace -->
             <div class="footer-section">
                 <h3>ACERCA</h3>
                 <a href="nosotros.html">Nosotros</a>
             </div>
-            <!-- Sección "Comprar" -->
+    
+            <!-- Sección "Comprar" con un título y varios enlaces -->
             <div class="footer-section">
                 <h3>COMPRAR</h3>
                 <a href="cuero.php">Cuero</a>
                 <a href="tejidas.html">Tejidas</a>
                 <a href="personalizar.html">Personalizar</a>
             </div>
-            <!-- Sección "Usuario" -->
+    
+            <!-- Sección "Usuario" con un título y enlaces de cuenta -->
             <div class="footer-section">
                 <h3>USUARIO</h3>
                 <a href="mi-cuenta.html">Mi cuenta</a>
                 <a href="login.html">Login</a>
             </div>
         </div>
-        <!-- Derechos reservados -->
+    
+        <!-- Texto de derechos reservados en la parte inferior -->
         <div class="footer-bottom">
             <p>© Ophira Creations. Todos los derechos reservados</p>
         </div>
     </footer>
-
-    <!-- JS -->
-    <script src="script.js"></script>
 </body>
 </html>
+
+<?php $conexion->close(); ?>
