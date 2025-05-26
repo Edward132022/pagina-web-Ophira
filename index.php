@@ -1,0 +1,147 @@
+<?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ofira</title>
+
+    <!-- Importar la fuente DM Serif Display -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+    <!-- Enlace al archivo CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Contenedor del menú -->
+    <nav class="menu">
+        <a href="index.php" class="logo">
+            <img src="imagenes/logo.png" alt="Logo">
+        </a>
+
+        <!-- Menú hamburguesa -->
+        <div class="hamburger" onclick="toggleMenu()">
+            ☰
+        </div>
+
+        <!-- Enlaces de navegación -->
+        <ul class="nav-links">
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="cuero.php">Cuero</a></li>
+            <li><a href="tejido.php">Tejido</a></li>
+            <li><a href="personaliza.html">Personaliza</a></li>
+            <li><a href="promociones.php">Promociones</a></li>
+        </ul>
+
+        <!-- Barra de búsqueda -->
+        <div class="search-box">
+            <input type="text" placeholder="Buscar...">
+            <button>
+                <img src="imagenes/buscar.png" alt="Buscar">
+            </button>
+        </div>
+
+        <!-- Íconos de usuario y carrito -->
+        <div class="icons">
+            <a href="mi_cuenta.html"><img src="imagenes/user.png" alt="Usuario"></a>
+            <a href="carrito.html"><img src="imagenes/cart.png" alt="Carrito"></a>
+        </div>
+    </nav>
+
+    <!-- CARRUSEL -->
+    <div class="carousel">
+        <div class="carousel-slide">
+            <div class="slide" style="background-image: url('imagenes/nosotros.png');" onclick="location.href='nosotros.html';">
+                <h2>Nosotros</h2>
+            </div>
+            <div class="slide" style="background-image: url('imagenes/cueros.png');" onclick="location.href='cuero.php';">
+                <h2>Cuero</h2>
+            </div>
+            <div class="slide" style="background-image: url('imagenes/tejidos.png');" onclick="location.href='tejido.php';">
+                <h2>Tejidos</h2>
+            </div>
+            <div class="slide" style="background-image: url('imagenes/personaliza.png');" onclick="location.href='personaliza.html';">
+                <h2>Personaliza</h2>
+            </div>
+            <div class="slide" style="background-image: url('imagenes/promociones.png');" onclick="location.href='promociones.php';">
+                <h2>Promociones</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <main>
+        <h2 class="titulo">Nuestros productos</h2>
+        <section class="productos-grid">
+            <!-- Producto 1 -->
+            <div class="producto">
+                <img src="imagenes/tejida_negra.png" alt="Pulsera Tejida Negra">
+                <a href="tejido.php">Pulsera Tejida Negra</a>
+                <p class="precio">COP 25.000</p>
+            </div>
+            <!-- Producto 2 -->
+            <div class="producto">
+                <img src="imagenes/cuero_marron.png" alt="Pulsera de cuero Marrón">
+                <a href="cuero.php">Pulsera de cuero Marrón</a>
+                <p class="precio">COP 25.000</p>
+            </div>
+            <!-- Producto 3 -->
+            <div class="producto">
+                <img src="imagenes/tejida_roja.png" alt="Pulsera tejida Roja">
+                <a href="tejido.php">Pulsera Tejida Roja</a>
+                <p class="precio">COP 25.000</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Banner Estático -->
+    <div class="banner" onclick="location.href='promociones.php';">
+        <div class="slide" style="background-image: url('imagenes/promociones.png');">
+            <div class="overlay">
+                <span class="ver-mas">Ver más</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>ACERCA</h3>
+                <a href="nosotros.html">Nosotros</a>
+            </div>
+            <div class="footer-section">
+                <h3>COMPRAR</h3>
+                <a href="cuero.php">Cuero</a>
+                <a href="tejido.php">Tejidas</a>
+                <a href="personaliza.html">Personalizar</a>
+            </div>
+            <div class="footer-section">
+                <h3>USUARIO</h3>
+                <a href="mi_cuenta.html">Mi cuenta</a>
+                <a href="login.html">Login</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© Ophira Creations. Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Aviso de cookies">
+        <div class="cookie-content">
+            <p id="cookie-text">
+                Esta web usa cookies para mejorar tu experiencia. Al continuar navegando, aceptas nuestra 
+                <a href="/politica-cookies.html" target="_blank" rel="noopener">política de cookies</a>.
+            </p>
+            <button id="accept-cookies" aria-describedby="cookie-text">Aceptar</button>
+        </div>
+    </div>
+    <script src="cookies.js"></script>
+</body>
+</html>

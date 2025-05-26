@@ -1,9 +1,20 @@
+
 <?php
-$conexion = new mysqli("localhost", "root", "", "usuarios");
-$conexion->set_charset("utf8");
+// Activar reporte de errores para depuración (remover en producción)
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// Conexión a la base de datos
+define('DB_HOST', 'sql202.infinityfree.com');
+define('DB_USER', 'if0_39047307');
+define('DB_PASS', 'cy5DglojXTK');
+define('DB_NAME', 'if0_39047307_usuarios');
+
+$conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+$conexion->set_charset('utf8');
 
 if ($conexion->connect_error) {
-    die("Conexión fallida: " . $conexion->connect_error);
+    die('Conexión fallida: ' . $conexion->connect_error);
 }
 
 $sql = "SELECT * FROM articulo WHERE descripcion LIKE '%descuento%'";
@@ -30,7 +41,7 @@ $resultado = $conexion->query($sql);
 
   <!-- Contenedor del menú -->
   <nav class="menu">
-    <a href="index.html" class="logo">
+    <a href="index.php" class="logo">
       <img src="imagenes/logo.png" alt="Logo">
     </a>
     <div class="hamburger" onclick="toggleMenu()">☰</div>

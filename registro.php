@@ -1,10 +1,9 @@
 <?php
 // 1. CONEXIÓN A LA BASE DE DATOS
-$servidor  = "localhost";
-$user      = "root";
-$pass      = "";
-$baseDatos = "usuarios";
-
+$servidor = "sql202.infinityfree.com";
+$user = "if0_39047307";
+$pass = "cy5DglojXTK";
+$baseDatos = "if0_39047307_usuarios";
 $enlace = mysqli_connect($servidor, $user, $pass, $baseDatos);
 if (!$enlace) {
     die("Error de conexión: " . mysqli_connect_error());
@@ -59,7 +58,7 @@ mysqli_close($enlace);
 <body>
   <!-- Barra de navegación -->
   <nav class="menu">
-    <a href="index.html" class="logo"><img src="imagenes/logo.png" alt="Logo"></a>
+    <a href="index.php" class="logo"><img src="imagenes/logo.png" alt="Logo"></a>
     <div class="hamburger" onclick="toggleMenu()">☰</div>
     <ul class="nav-links">
       <li><a href="nosotros.html">Nosotros</a></li>

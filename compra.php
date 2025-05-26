@@ -1,7 +1,21 @@
-<?php
-$conexion = new mysqli("localhost", "root", "", "usuarios");
 
-// Obtener los artículos del carrito desde la tabla 'articulo'
+<?php
+// Activar reporte de errores para depuración (remover en producción)
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// Conexión a la base de datos
+define('DB_HOST', 'sql202.infinityfree.com');
+define('DB_USER', 'if0_39047307');
+define('DB_PASS', 'cy5DglojXTK');
+define('DB_NAME', 'if0_39047307_usuarios');
+
+$conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+$conexion->set_charset('utf8');
+
+if ($conexion->connect_error) {
+    die('Conexión fallida: ' . $conexion->connect_error);
+}
 $productos = [];
 $total = 0;
 
@@ -30,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $insertar->bind_param("ssisssssdii", $nombre, $correo, $numero, $direccion, $pais, $ciudad, $codigo_postal, $productos_texto, $total, $ntarjeta, $nmtitular);
     $insertar->execute();
 
-    echo "<script>alert('¡Compra confirmada!'); window.location.href = 'index.html';</script>";
+    echo "<script>alert('¡Compra confirmada!'); window.location.href = 'index.php';</script>";
     exit;
 }
 ?>

@@ -1,8 +1,20 @@
+```php
 <?php
-$conexion = new mysqli("localhost", "root", "", "usuarios");
+// Activar reporte de errores para depuración (remover en producción)
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-if ($conexion->connect_errno) {
-    die("Error al conectar con la base de datos: " . $conexion->connect_error);
+// Conexión a la base de datos
+define('DB_HOST', 'sql202.infinityfree.com');
+define('DB_USER', 'if0_39047307');
+define('DB_PASS', 'cy5DglojXTK');
+define('DB_NAME', 'if0_39047307_usuarios');
+
+$conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+$conexion->set_charset('utf8');
+
+if ($conexion->connect_error) {
+    die('Conexión fallida: ' . $conexion->connect_error);
 }
 
 // Obtener todos los pedidos sin 'id'
